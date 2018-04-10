@@ -1,0 +1,17 @@
+<joblist>
+  <job>
+    <description></description>
+    <executionEnabled>true</executionEnabled>
+    <id>8a603bda-1869-4d51-b1cf-0cd19cd5a74c</id>
+    <loglevel>INFO</loglevel>
+    <name>upload</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <exec>whoami</exec>
+      </command>
+    </sequence>
+    <uuid>8a603bda-1869-4d51-b1cf-0cd19cd5a74c</uuid>
+  </job>
+</joblist>
