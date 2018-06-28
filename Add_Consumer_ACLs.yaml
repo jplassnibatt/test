@@ -1,0 +1,95 @@
+- description: ''
+  executionEnabled: true
+  group: Kafka
+  id: 7cca5641-77c7-435b-9c9c-a1015e76686d
+  loglevel: INFO
+  name: Add Consumer ACLs
+  nodeFilterEditable: false
+  nodefilters:
+    dispatch:
+      excludePrecedence: true
+      keepgoing: false
+      rankOrder: ascending
+      successOnEmptyNodeFilter: false
+      threadcount: '1'
+    filter: ${option.cluster}
+  nodesSelectedByDefault: true
+  notification:
+    onfailure:
+      plugin:
+        configuration:
+          webhook_base_url: https://wsb2bext.usaa.com/slack_webhook/services/
+          webhook_token: T8R1X7N0M/B9APA42B1/PtUPyokIv9ghBQ2INncpzaqz?authentication=Bd0hD9mhwVOf
+        type: SlackNotification
+    onsuccess:
+      plugin:
+        configuration:
+          webhook_base_url: https://wsb2bext.usaa.com/slack_webhook/services/
+          webhook_token: T8R1X7N0M/B9APA42B1/PtUPyokIv9ghBQ2INncpzaqz?authentication=Bd0hD9mhwVOf
+        type: SlackNotification
+  notifyAvgDurationThreshold: null
+  options:
+  - description: |-
+      Select the cluster where the consumer ACL is to be created. <br />
+      Select testkfds022br1lsat for the secured test cluster environment.<br />
+      Select prodkfds011br01lsat for the Production ITC Cluster.<br />
+      Select prodkfds021br01ldfw for the Production DFW Cluster.<br />
+    enforced: true
+    name: cluster
+    required: true
+    value: testkfds022br1lsat
+    values:
+    - prodkfds011br01lsat
+    - prodkfds021br01ldfw
+    - testkfds022br1lsat
+  - description: |-
+      Enter the name of the topic. <br />
+      Note that it must match this regular expression: ^(log|cmd|evt|cdc)_[a-z0-9\\_].+
+    name: topicname
+    regex: ^(log|cmd|evt|cdc)_[a-z0-9\\\_].+
+    required: true
+  - description: |-
+      Enter the service account for which you need consumer ACLs configured. <br \>
+      Note: You must use uppercase letters.
+    name: serviceaccount
+    regex: '[A-Z0-9\_\-]+'
+    required: true
+  - description: Enter the name of the consumer group you wish to create
+    name: ConsumerGroupName
+    required: true
+  - description: If this is for an openshift client, you should have a second service account. This field is not required.
+    name: serviceaccount2
+  scheduleEnabled: false
+  sequence:
+    commands:
+    - script: |
+        echo "Setting the following parameters: "
+
+        if [ "$RD_OPTION_CLUSTER" = "testkfds022br1lsat" ]; then
+            BROKER=testkfds022br1lsat
+            ZOOKEEPER=testkfds022zk1lsat
+        elif [ "$RD_OPTION_CLUSTER" = "prodkfds011br01lsat" ]; then
+            BROKER=prodkfds011br01lsat
+            ZOOKEEPER=prodkfds011zk01lsat
+        elif [ "$RD_OPTION_CLUSTER" = "prodkfds021br01ldfw" ]; then
+            BROKER=prodkfds021br01ldfw
+            ZOOKEEPER=prodkfds021zk01ldfw
+        else
+            echo "I don't know what zookeeper to use."
+        fi
+
+        echo "Using broker $BROKER"
+        echo "Using zookeeper $ZOOKEEPER"
+
+        ## Configure ACLs for serviceaccount
+        echo "Setting consumer ACLs for the $RD_OPTION_SERVICEACCOUNT user"
+        su - kafka -c "/usr/bin/kafka-acls --authorizer-properties zookeeper.connect='${ZOOKEEPER}:2181' --add --allow-principal User:${RD_OPTION_SERVICEACCOUNT} --group ${RD_OPTION_CONSUMERGROUPNAME}  --operation read --operation describe --topic ${RD_OPTION_TOPICNAME}"
+
+        ## Configure ACLs for serviceaccount2
+        if [ ! -z $RD_OPTION_SERVICEACCOUNT2 ]; then
+            echo "Setting consumer ACLs for the $RD_OPTION_SERVICEACCOUNT2 user"
+            su - kafka -c "/usr/bin/kafka-acls --authorizer-properties zookeeper.connect='${ZOOKEEPER}:2181' --add --allow-principal User:${RD_OPTION_SERVICEACCOUNT2} --group ${RD_OPTION_CONSUMERGROUPNAME}  --operation read --operation describe --topic ${RD_OPTION_TOPICNAME}"
+        fi
+    keepgoing: false
+    strategy: sequential
+  uuid: 7cca5641-77c7-435b-9c9c-a1015e76686d
