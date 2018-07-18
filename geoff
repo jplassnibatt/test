@@ -1,0 +1,30 @@
+ - name:   geoff
+   scheduleEnabled: True
+   executionEnabled:   True
+   nodeFilterEditable:     false
+   nodesSelectedByDefault: true
+   nodefilters:
+       filter: ".*"
+       dispatch:
+           excludePrecedence: true
+           keepgoing: false
+           rankOrder: ascending
+           successOnEmptyNodeFilter: false
+           threadcount: 1
+   sequence:
+       keepgoing: false
+       strategy: node-first
+       commands:
+         - script: |
+               echo "hello world"
+   schedule:
+       time:
+           seconds:    "01"
+           minute:     "07"
+           hour:       "08"
+       dayofmonth:
+           day:
+       month:          "*"
+       weekday:
+           day:        "*"
+       year:           "*"
