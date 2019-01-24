@@ -1,5 +1,5 @@
 - defaultTab: summary
-  description: ''
+  description: test
   executionEnabled: true
   id: 20dca41e-7c50-40e8-b1c5-cd434c559e2d
   loglevel: INFO
