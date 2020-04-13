@@ -1,0 +1,28 @@
+<joblist>
+  <job>
+    <defaultTab>nodes</defaultTab>
+    <description></description>
+    <executionEnabled>true</executionEnabled>
+    <id>95960ea7-3300-4162-921e-0fafafe3595c</id>
+    <loglevel>INFO</loglevel>
+    <name>scm-clone</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <plugins />
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <step-plugin type='git-clone-step'>
+          <configuration>
+            <entry key='gitBaseDirectory' value='/home/jpla/rundeck/instances/rundeckpro3/projects/git.export/scm' />
+            <entry key='gitBranch' value='master' />
+            <entry key='gitPasswordPath' value='keys/github' />
+            <entry key='gitUrl' value='git://github.com/jplassnibatt/resources.git' />
+            <entry key='gitUseProjectBasedSubdirectory' value='false' />
+            <entry key='strictHostKeyChecking' value='no' />
+          </configuration>
+        </step-plugin>
+      </command>
+    </sequence>
+    <uuid>95960ea7-3300-4162-921e-0fafafe3595c</uuid>
+  </job>
+</joblist>
