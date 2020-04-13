@@ -1,0 +1,19 @@
+<joblist>
+  <job>
+    <defaultTab>nodes</defaultTab>
+    <description></description>
+    <executionEnabled>true</executionEnabled>
+    <id>82875f2a-34bb-42f5-8f48-0c9e48580dff</id>
+    <loglevel>INFO</loglevel>
+    <name>export</name>
+    <nodeFilterEditable>false</nodeFilterEditable>
+    <plugins />
+    <scheduleEnabled>true</scheduleEnabled>
+    <sequence keepgoing='false' strategy='node-first'>
+      <command>
+        <exec>whoami;ls</exec>
+      </command>
+    </sequence>
+    <uuid>82875f2a-34bb-42f5-8f48-0c9e48580dff</uuid>
+  </job>
+</joblist>
