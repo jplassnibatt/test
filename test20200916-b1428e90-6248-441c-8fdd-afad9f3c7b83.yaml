@@ -6,7 +6,7 @@
   name: test20200916
   nodeFilterEditable: false
   plugins:
-    ExecutionLifecycle: {}
+    ExecutionLifecycle: null
   scheduleEnabled: true
   schedules: []
   sequence:
