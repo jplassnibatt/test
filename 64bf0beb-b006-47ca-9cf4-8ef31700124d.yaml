@@ -1,0 +1,29 @@
+- defaultTab: nodes
+  description: ''
+  executionEnabled: true
+  id: 64bf0beb-b006-47ca-9cf4-8ef31700124d
+  loglevel: INFO
+  name: terraform
+  nodeFilterEditable: false
+  options:
+  - name: tf
+  plugins:
+    ExecutionLifecycle: {}
+  scheduleEnabled: true
+  schedules: []
+  sequence:
+    commands:
+    - plugins:
+        LogFilter:
+        - config:
+            filter: .
+            logData: 'true'
+            prefix: result
+          type: json-mapper
+      script: |-
+        cd /home/jpla/pd/rd/terraform/instance.ubuntu1
+        @option.tf@
+    keepgoing: false
+    strategy: node-first
+  uuid: 64bf0beb-b006-47ca-9cf4-8ef31700124d
+
